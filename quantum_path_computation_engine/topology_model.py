@@ -1,4 +1,4 @@
-"""Model for the topology of a quantum network (internal representation of the YAML document)."""
+"""Parsing of the network YAML file into a network_model (intermediate representation)."""
 
 import yaml
 import cerberus
@@ -12,7 +12,7 @@ LINK_SCHEMA = {
     'bandwidth':  {'type': 'integer'},               # Point-to-point capacity in Bell pairs per sec
 }
 
-TOPOLOGY_SCHEMA = {
+NETWORK_SCHEMA = {
     'routers': {
         'type': 'list',
         'schema': {
@@ -29,39 +29,39 @@ TOPOLOGY_SCHEMA = {
     },
 }
 
-class ReadTopologyModelError(Exception):
-    """Exception is thrown when there is a problem reading the topology model."""
+class ReadNetworkModelError(Exception):
+    """Exception is thrown when there is a problem reading the network model."""
 
-class TopologyValidator(cerberus.Validator):
-    """The TopologyValidator class is used to validate the correctness of a topology YAML file."""
+class NetworkValidator(cerberus.Validator):
+    """The NetworkValidator class is used to validate the correctness of a network YAML file."""
 
-def read_topology_model_from_file(filename):
-    """Read and parse a topology YAML file return the corresponding topology model.
+def read_network_model_from_file(filename):
+    """Read and parse a network YAML file return the corresponding network model.
 
     Args:
-        filename (str): The name of the topology file.
+        filename (str): The name of the network YAML file.
     Returns:
-        The topology model.
+        The network model (intermediate representation).
     Raises:
-        ReadTopologyModelError: There was a problem reading the topology model.
+        ReadNetworkModelError: There was a problem reading the network model.
     """
     try:
         file = open(filename, 'r')
     except (OSError, IOError) as err:
-        message = f"Could not open topology file {filename} ({err})"
-        raise ReadTopologyModelError(message)
+        message = f"Could not open network file {filename} ({err})"
+        raise ReadNetworkModelError(message)
     try:
-        topology_model = yaml.safe_load(file)
+        network_model = yaml.safe_load(file)
     except yaml.YAMLError as err:
-        message = f"Could not parse topology file {filename} ({err})"
-        raise ReadTopologyModelError(message)
+        message = f"Could not parse network file {filename} ({err})"
+        raise ReadNetworkModelError(message)
     file.close()   ###@@@
-    validator = TopologyValidator(TOPOLOGY_SCHEMA)
-    if not validator.validate(topology_model, TOPOLOGY_SCHEMA):
-        message = f"Could not validate topology file {filename}"
-        raise ReadTopologyModelError(message)
+    validator = NetworkValidator(NETWORK_SCHEMA)
+    if not validator.validate(network_model, NETWORK_SCHEMA):
+        message = f"Could not validate network file {filename}"
+        raise ReadNetworkModelError(message)
         #@@@
         # pretty_printer = pprint.PrettyPrinter()
         # pretty_printer.pprint(validator.errors)
-    topology_model = validator.normalized(topology_model)
-    return topology_model
+    network_model = validator.normalized(network_model)
+    return network_model

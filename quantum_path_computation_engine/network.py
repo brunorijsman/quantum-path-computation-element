@@ -1,6 +1,6 @@
-"""Topology of a quantum network."""
+"""Internal representation of a quantum network."""
 
-import topology_model
+import network_model
 
 class Network:
     """A quantum network.
@@ -13,22 +13,23 @@ class Network:
         self.links = []
 
     def read_from_file(self, filename):
-        """Read and parse a topology YAML file and store it in this topology object.
+        """Read and parse a network YAML file and store it in this network object.
 
         Args:
-            filename (str): The name of the topology file.
+            filename (str): The name of the network YAML file.
         Returns:
             None
         """
         ###@@@ deal with exception
-        model = topology_model.read_topology_model_from_file(filename)
+        model = network_model.read_network_model_from_file(filename)
         self.read_from_model(model)
 
     def read_from_model(self, model):
-        """Read this topology object from a topology YAML model.
+        """Store the contents of a network model (i.e. a parsed network YAML file) into this network
+        object.
 
         Args:
-            model (yaml model): The YAML model of the topology.
+            model: The network model (i.e. the parsed YAML network file)
         Returns:
             None
         """
