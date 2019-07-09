@@ -24,7 +24,7 @@ py==1.8.0
 Pygments==2.3.1
 pylint==2.3.1
 pyparsing==2.4.0
-pytest==5.0.1
+pytest==4.6.4
 pytest-cov==2.7.1
 pytz==2019.1
 PyYAML==5.1.1
