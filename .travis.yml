@@ -1,8 +1,6 @@
 anguage: python
 python:
-  - "3.6"
-  - "3.6-dev"
-  - "3.7-dev"
+  - "3.7"
 install:
   - virtualenv env --python=python3
   - source env/bin/activate
