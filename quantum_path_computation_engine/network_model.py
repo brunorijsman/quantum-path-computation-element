@@ -37,10 +37,11 @@ class NetworkValidator(cerberus.Validator):
     """The NetworkValidator class is used to validate the correctness of a network YAML file."""
 
 def read_network_model_from_file(filename):
-    """Read and parse a network YAML file return the corresponding network model.
+    """Read and parse a network YAML document from a file and return the corresponding network
+    model.
 
     Args:
-        filename (str): The name of the network YAML file.
+        Filename: Filename of the file to read the network YAML document from.
     Returns:
         The network model (intermediate representation).
     Raises:
@@ -52,14 +53,27 @@ def read_network_model_from_file(filename):
         message = f"Could not open network file {filename} ({err})"
         raise ReadNetworkModelError(message)
     with file:
-        try:
-            network_model = yaml.safe_load(file)
-        except yaml.YAMLError as err:
-            message = f"Could not parse network file {filename} ({err})"
-            raise ReadNetworkModelError(message)
+        return read_network_model_from_stream(file)
+
+def read_network_model_from_stream(stream):
+    """Read and parse a network YAML document from a stream and return the corresponding network
+    model.
+
+    Args:
+        stream: Stream to read the network YAML document from.
+    Returns:
+        The network model (intermediate representation).
+    Raises:
+        ReadNetworkModelError: There was a problem reading the network model.
+    """
+    try:
+        network_model = yaml.safe_load(stream)
+    except yaml.YAMLError as err:
+        message = f"Could not parse network YAML document ({err})"
+        raise ReadNetworkModelError(message)
     validator = NetworkValidator(NETWORK_SCHEMA)
     if not validator.validate(network_model, NETWORK_SCHEMA):
-        message = f"Could not validate network file {filename}"
+        message = f"Could not validate network YAMLdocument"
         raise ReadNetworkModelError(message)
         # TODO: Better error message
         # pretty_printer = pprint.PrettyPrinter()
