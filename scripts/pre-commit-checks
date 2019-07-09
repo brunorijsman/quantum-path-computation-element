@@ -63,8 +63,27 @@ check_directory_tests_has_perfect_pylint_score () {
 
 check_all_tests_pass () {
     step="Check all tests pass"
-    if ! output=$(pytest --cov=tests --cov=quantum_path_computation_engine) ; then
+    if ! output=$(pytest --cov=tests --cov=quantum_path_computation_engine --cov-report=html); then
         remedy="Fix failing tests (all tests must pass)"
+        fail "${step}" "${remedy}" "${output}"
+    fi
+    progress_ok "${step}"
+}
+
+extract_actual_coverage () {
+    report_output=$1
+    actual_coverage=$(echo ${report_output} | tail -1 | tr -s " " | cut -d " " -f 4)
+    return "${actual_coverage}"
+}
+
+check_code_coverage_is_sufficient () {
+    minumum_coverage="40"    # TODO: Increase minimum code coverage to 95%
+    output=$(coverage report --fail-under=${minumum_coverage})
+    exit_code=$?
+    actual_coverage=$(coverage report | tail -1 | tr -s " " | cut -d " " -f 4)
+    step="Check code coverage is sufficient (actual coverage is ${actual_coverage}, minumum coverage is ${minumum_coverage}%)"
+    if [[ ${exit_code} == 2 ]]; then
+        remedy="Increase code coverage from ${actual_coverage} to ${minumum_coverage}%"
         fail "${step}" "${remedy}" "${output}"
     fi
     progress_ok "${step}"
@@ -75,10 +94,9 @@ cleanup_temporary_files
 check_directory_quantum_path_computation_engine_has_perfect_pylint_score
 check_directory_tests_has_perfect_pylint_score
 check_all_tests_pass
+check_code_coverage_is_sufficient
 
 # TODO: Generate documentation
-
-# TODO: Check minimum code coverage
 
 echo
 echo -e "${GREEN}${INVERT}*** OK TO COMMIT ***${RESET}"
