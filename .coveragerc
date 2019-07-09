@@ -1,0 +1,5 @@
+[run]
+omit=
+    env/*
+[paths]
+source=quantum_path_computation_engine

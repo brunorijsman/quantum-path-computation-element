@@ -78,5 +78,7 @@ check_all_tests_pass
 
 # TODO: Generate documentation
 
+# TODO: Check minimum code coverage
+
 echo
 echo -e "${GREEN}${INVERT}*** OK TO COMMIT ***${RESET}"
