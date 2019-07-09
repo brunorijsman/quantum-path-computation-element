@@ -24,7 +24,7 @@ The inputs are:
    feasible route for the path could be determined.
 
 The output of the Quantum Path Computation Element (i.e. the computed routes) can be fed into a
-Quantum Path Signaling Element that installs the path into the Quantum Forwarding Plane (which
+Quantum Path Signaling Element that installs the paths into the Quantum Forwarding Plane (which
 will be simulated using NetSquid until the first real quantum network hardware is built).
 
 ## Information in the _network_ file
