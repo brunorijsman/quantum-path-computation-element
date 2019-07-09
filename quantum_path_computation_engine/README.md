@@ -15,7 +15,7 @@ The inputs are:
  * [TODO] A _demand_ file that describes the traffic demand and other constrains for the end-to-end
    quantum communication paths that the quantum applications wish to establish.
 
- * [TODO] A _technology_ file that describes the attributs of the specific technology that is used
+ * [TODO] A _technology_ file that describes the attributes of the specific technology that is used
    to implement the quantum network (e.g. nitrogen-vacancy centers versus ion traps)
 
  The output is:
