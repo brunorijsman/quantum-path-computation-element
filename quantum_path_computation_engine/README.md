@@ -36,7 +36,7 @@ It contains the following information:
 
  * A list of quantum routers.
 
- * A list of quantum and classical links that interconnect the quantum routers.
+ * A list of links that interconnect the quantum routers.
 
 For each quantum router, the following attributes can be specified:
 
