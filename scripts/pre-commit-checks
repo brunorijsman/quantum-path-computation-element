@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Make sure we are running in a virtual environment so that all the pytools work
+if [[ -z "${VIRTUAL_ENV}" ]]; then
+  echo "Virtual environment not activated"
+  exit 1
+fi
+
+# Clean up temporary files
+cd ${VIRTUAL_ENV}/..
+scripts/cleanup
+
+# Lint quantum_path_computation_engine directory
+if ! pylint quantum_path_computation_engine ; then
+    echo "*** DO NOT COMMIT ***"
+    echo "Fix lint errors for quantum_path_computation_engine directory (score must be perfect 10.0)"
+    exit 1
+fi
+
+# Lint tests directory
+if ! pylint tests ; then
+    echo "*** DO NOT COMMIT ***"
+    echo "Fix lint errors for tests directory (score must be perfect 10.0)"
+    exit 1
+fi
+
+# Run unit tests, system tests, and collect code coverage results
+if ! pytest --cov tests ; then
+    echo "*** DO NOT COMMIT ***"
+    echo "Fix unit tests and/or system tests (all tests must pass)"
+    exit 1
+fi
+
+# Regerence documentation
+###@@@ TODO
+
+echo "All good; you can commit."

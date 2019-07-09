@@ -1,0 +1,8 @@
+[MASTER]
+
+init-hook='import sys; sys.path.append("quantum_path_computation_engine"); sys.path.append("tests")'
+
+[MESSAGES CONTROL]
+
+disable=
+    fixme,                              # Temporary, until I fix all the TODOs and FIXMEs

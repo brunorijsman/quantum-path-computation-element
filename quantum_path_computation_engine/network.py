@@ -8,9 +8,11 @@ class Network:
     A quantum network object describes the topology and available resources in a quantum network. It
     consists of quantum routers and quantum links."""
 
-    def __init__(self) -> None:
+    def __init__(self, network_filename):
         self.routers = []
         self.links = []
+        ###@@@ handle exceptions
+        self.read_from_file(network_filename)
 
     def read_from_file(self, filename):
         """Read and parse a network YAML file and store it in this network object.
@@ -20,7 +22,7 @@ class Network:
         Returns:
             None
         """
-        ###@@@ deal with exception
+        ###@@@ handle exceptions
         model = network_model.read_network_model_from_file(filename)
         self.read_from_model(model)
 
