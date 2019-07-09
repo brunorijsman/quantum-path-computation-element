@@ -1,37 +1,82 @@
 #!/bin/bash
 
-# Make sure we are running in a virtual environment so that all the pytools work
-if [[ -z "${VIRTUAL_ENV}" ]]; then
-  echo "Virtual environment not activated"
-  exit 1
-fi
+RESET="\033[0m"
+RED="\033[31m"
+GREEN="\033[32m"
+INVERT="\033[7m"
 
-# Clean up temporary files
-cd ${VIRTUAL_ENV}/..
-scripts/cleanup
+progress_ok () {
+    message="$1"
+    echo -e "${GREEN}[OK]${RESET} ${message}"
+}
 
-# Lint quantum_path_computation_engine directory
-if ! pylint quantum_path_computation_engine ; then
-    echo "*** DO NOT COMMIT ***"
-    echo "Fix lint errors for quantum_path_computation_engine directory (score must be perfect 10.0)"
+fail () {
+    message="$1"
+    remedy="$2"
+    output="$3"
+    echo -e "${RED}[FAIL]${RESET} ${message}"
+    echo -e ""
+    if [[ ! -z "${output}" ]]; then
+        echo "${output}"
+        echo 
+    fi
+    if [[ ! -z "${remedy}" ]]; then
+        echo -e "${RED}${remedy}${RESET}"
+        echo 
+    fi
+    echo -e "${RED}${INVERT}*** DO NOT COMMIT ***${RESET}"
     exit 1
-fi
+}
 
-# Lint tests directory
-if ! pylint tests ; then
-    echo "*** DO NOT COMMIT ***"
-    echo "Fix lint errors for tests directory (score must be perfect 10.0)"
-    exit 1
-fi
+check_virtual_environment_is_active () {
+    step="Check virtual environment is active"
+    if [[ -z "${VIRTUAL_ENV}" ]]; then
+        remedy="Activate virtual environment"
+        fail ${step} ${remedy}
+    fi
+    progress_ok "${step}"
+}
 
-# Run unit tests, system tests, and collect code coverage results
-if ! pytest --cov tests ; then
-    echo "*** DO NOT COMMIT ***"
-    echo "Fix unit tests and/or system tests (all tests must pass)"
-    exit 1
-fi
+cleanup_temporary_files () {
+    cd ${VIRTUAL_ENV}/..
+    scripts/cleanup
+    progress_ok "Cleanup temporary files"
+}
 
-# Regerence documentation
-###@@@ TODO
+check_directory_has_perfect_pylint_score () {
+    directory="$1"
+    step="Check directory ${directory} has perfect pylint score"
+    if ! output=$(pylint ${directory}) ; then
+        remedy="Fix lint errors for directory ${directory} (score must be perfect 10.0)"
+        fail "${step}" "${remedy}" "${output}"
+    fi
+    progress_ok "${step}"
+}
 
-echo "All good; you can commit."
+check_directory_quantum_path_computation_engine_has_perfect_pylint_score () {
+    check_directory_has_perfect_pylint_score quantum_path_computation_engine
+}
+
+check_directory_tests_has_perfect_pylint_score () {
+    check_directory_has_perfect_pylint_score tests
+}
+
+check_all_tests_pass () {
+    step="Check all tests pass"
+    if ! output=$(pytest --cov tests) ; then
+        remedy="Fix failing tests (all tests must pass)"
+        fail "${step}" "${remedy}" "${output}"
+    fi
+    progress_ok "${step}"
+}
+
+check_virtual_environment_is_active
+cleanup_temporary_files
+check_directory_quantum_path_computation_engine_has_perfect_pylint_score
+check_directory_tests_has_perfect_pylint_score
+check_all_tests_pass
+
+# TODO: Generate documentation
+
+echo
+echo -e "${GREEN}${INVERT}*** OK TO COMMIT ***${RESET}"
