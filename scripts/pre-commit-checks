@@ -63,7 +63,7 @@ check_directory_tests_has_perfect_pylint_score () {
 
 check_all_tests_pass () {
     step="Check all tests pass"
-    if ! output=$(pytest --cov tests) ; then
+    if ! output=$(pytest --cov=tests --cov=quantum_path_computation_engine) ; then
         remedy="Fix failing tests (all tests must pass)"
         fail "${step}" "${remedy}" "${output}"
     fi
