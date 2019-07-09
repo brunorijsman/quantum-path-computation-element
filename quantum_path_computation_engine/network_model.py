@@ -8,8 +8,9 @@ ROUTER_SCHEMA = {
 }
 
 LINK_SCHEMA = {
-    'name': {'required': True, 'type': 'string'},
-    'bandwidth':  {'type': 'integer'},               # Point-to-point capacity in Bell pairs per sec
+    'from': {'required': True, 'type': 'string'},
+    'to': {'required': True, 'type': 'string'},
+    # TODO: 'bandwidth':  {'type': 'integer'},       # Point-to-point capacity in Bell pairs per sec
 }
 
 NETWORK_SCHEMA = {
@@ -60,7 +61,7 @@ def read_network_model_from_file(filename):
     if not validator.validate(network_model, NETWORK_SCHEMA):
         message = f"Could not validate network file {filename}"
         raise ReadNetworkModelError(message)
-        #@@@
+        # TODO: Better error message
         # pretty_printer = pprint.PrettyPrinter()
         # pretty_printer.pprint(validator.errors)
     network_model = validator.normalized(network_model)

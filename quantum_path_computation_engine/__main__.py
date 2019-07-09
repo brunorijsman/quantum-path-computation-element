@@ -10,7 +10,7 @@ def parse_command_line_arguments():
     Returns: Parsed arguments.
     """
     parser = argparse.ArgumentParser(description='Quantum Path Computation Engine')
-    parser.add_argument("network-file", help="Network YAML file")
+    parser.add_argument("network_file", metavar="network-file", help="Network YAML file")
     arguments = parser.parse_args()
     return arguments
 

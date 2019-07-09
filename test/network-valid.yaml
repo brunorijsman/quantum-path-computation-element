@@ -1,0 +1,32 @@
+#
+#         (E)
+#        /   \
+#       /     \   
+#    (C)-------(D)
+#     |      /  |
+#     |    /    |
+#     |  /      |
+#    (A)-------(B)
+#
+
+routers:
+  - name: alice
+  - name: bob
+  - name: carol
+  - name: david
+  - name: erin
+links:
+  - from: alice
+    to: bob
+  - from: alice
+    to: carol
+  - from: alice
+    to: david
+  - from: bob
+    to: carol
+  - from: carol
+    to: david
+  - from: carol
+    to: erin
+  - from: david
+    to: erin
