@@ -1,39 +1,6 @@
 """Topology of a quantum network."""
 
-import pprint
-import sys
-
-import yaml
-import cerberus
-
-ROUTER_SCHEMA = {
-    'name': {'required': True, 'type': 'string'},
-}
-
-LINK_SCHEMA = {
-    'name': {'required': True, 'type': 'string'},
-    'bandwidth':  {'type': 'integer'},               # Point-to-point capacity in Bell pairs per sec
-}
-
-NETWORK_SCHEMA = {
-    'routers': {
-        'type': 'list',
-        'schema': {
-            'type': 'dict',
-            'schema': ROUTER_SCHEMA,
-        }
-    },
-    'links': {
-        'type': 'list',
-        'schema': {
-            'type': 'dict',
-            'schema': LINK_SCHEMA,
-        }
-    },
-}
-
-class NetworkValidator(cerberus.Validator):
-    """The TopologyValidator class is used to validate the correctness of a topology YAML file."""
+import topology_model
 
 class Network:
     """A quantum network.
@@ -46,33 +13,16 @@ class Network:
         self.links = []
 
     def read_from_file(self, filename):
-        """Read and parse a topology file and store it in this topology object.
+        """Read and parse a topology YAML file and store it in this topology object.
 
         Args:
             filename (str): The name of the topology file.
         Returns:
             None
         """
-        try:
-            file = open(filename, 'r')
-        except (OSError, IOError) as err:
-            print(f"Could not open topology file {filename} ({err})", file=sys.stderr)
-            sys.exit(1)
-        try:
-            topology_model = yaml.safe_load(file)
-        except yaml.YAMLError as err:
-            print(f"Could not parse topology file {filename} ({err})", file=sys.stderr)
-            file.close()
-            sys.exit(1)
-        file.close()
-        validator = NetworkValidator(NETWORK_SCHEMA)
-        if not validator.validate(topology_model, NETWORK_SCHEMA):
-            print(f"Could not validate topology file {filename}", file=sys.stderr)
-            pretty_printer = pprint.PrettyPrinter()
-            pretty_printer.pprint(validator.errors)
-            exit(1)
-        topology_model = validator.normalized(topology_model)
-        self.read_from_model(topology_model)
+        ###@@@ deal with exception
+        model = topology_model.read_topology_model_from_file(filename)
+        self.read_from_model(model)
 
     def read_from_model(self, model):
         """Read this topology object from a topology YAML model.
