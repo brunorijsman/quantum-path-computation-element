@@ -50,12 +50,12 @@ def read_network_model_from_file(filename):
     except (OSError, IOError) as err:
         message = f"Could not open network file {filename} ({err})"
         raise ReadNetworkModelError(message)
-    try:
-        network_model = yaml.safe_load(file)
-    except yaml.YAMLError as err:
-        message = f"Could not parse network file {filename} ({err})"
-        raise ReadNetworkModelError(message)
-    file.close()   ###@@@
+    with file:
+        try:
+            network_model = yaml.safe_load(file)
+        except yaml.YAMLError as err:
+            message = f"Could not parse network file {filename} ({err})"
+            raise ReadNetworkModelError(message)
     validator = NetworkValidator(NETWORK_SCHEMA)
     if not validator.validate(network_model, NETWORK_SCHEMA):
         message = f"Could not validate network file {filename}"
