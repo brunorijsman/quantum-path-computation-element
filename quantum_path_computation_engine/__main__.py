@@ -5,20 +5,21 @@ import sys
 
 import network
 
-def parse_command_line_arguments(arguments):
+def parse_command_line_arguments(command_line_arguments):
     """Parse command line arguments.
 
     Returns: Parsed arguments.
     """
     parser = argparse.ArgumentParser(description='Quantum Path Computation Engine')
     parser.add_argument("network_file", metavar="network-file", help="Network YAML file")
-    arguments = parser.parse_args(arguments)
-    return arguments
+    parsed_arguments = parser.parse_args(command_line_arguments)
+    return parsed_arguments
 
-def main():
+def main(command_line_arguments):
     """Main entry point."""
-    arguments = parse_command_line_arguments(sys.argv[1:])
-    _network = network.Network(arguments.network_file)
+    parsed_arguments = parse_command_line_arguments(command_line_arguments)
+    _network = network.Network(parsed_arguments.network_file)
+    return 0
 
 if __name__ == "__main__":   # pragma: no cover
-    main()
+    sys.exit(main(sys.argv[1:]))

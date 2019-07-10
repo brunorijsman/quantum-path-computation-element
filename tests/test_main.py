@@ -3,6 +3,7 @@
 import pytest
 
 from quantum_path_computation_engine.__main__ import parse_command_line_arguments
+from quantum_path_computation_engine.__main__ import main
 
 def test_no_arguments(capsys):
     """Test absence of command line arguments."""
@@ -25,3 +26,8 @@ def test_network_argument():
     command_line_arguments = ['network-valid.yaml']
     parsed_arguments = parse_command_line_arguments(command_line_arguments)
     assert parsed_arguments.network_file == 'network-valid.yaml'
+
+def test_main():
+    """Test main entry point function."""
+    command_line_arguments = ['tests/network-valid.yaml']
+    main(command_line_arguments)
