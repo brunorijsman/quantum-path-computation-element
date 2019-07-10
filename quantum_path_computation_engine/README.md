@@ -4,8 +4,8 @@
 
 ## Summary of the functionality
 
-The Quantum Path Computation Engine (QPCE) computes the route for quantum traffic paths on a
-quantum network. 
+The Quantum Path Computation Engine (QPCE) computes the route for quantum paths on a quantum
+network. 
 
 The inputs are:
 
@@ -73,7 +73,53 @@ example, the following automatic discovery mechanisms:
 
 ## Information in the _demand_ file
 
-[TODO]
+The _demand_ that describes the traffic demand and other constrains for the end-to-end quantum
+communication paths that the quantum applications wish to establish.
+
+It contains the following information:
+
+ * A list of requested quantum paths.
+
+ * A list of constraints.
+
+The service provided by a quantum path from point A to point Z is to generate pairs of bi-partite
+entangled Bell pairs at points A and Z. These Bell pairs are consumed by quantum application
+end-points running at points A and Z. The Bell pairs can be consumed directly, e.g. for
+Quantum Key Distribution (QKD). Or the Bell pairs can be consumed to teleport qubits with an
+arbitrary state for more general distribute quantum applications.
+
+The application is able to request that these end-to-end entangled Bell pairs are
+generated at a specific rate, e.g. 10 Bell Pairs Per Second (BPPS). The job of the quantum path
+computation engine is to compute the route (e.g. A-B-C-D-Z) in such a manner that all paths are
+able to provide the requested "bandwidth" (in end-to-end BPPS) and also satisfy the other
+constraints.
+
+The quantum path computation engine endeavors to compute the optimal set of path routes in the
+sense that the total amount of resources consumed on the network is minimized.
+
+We currently only support point-to-point quantum paths that generate bi-partite entangled bell
+pairs. Support for multipoint quantum paths to generate multi-partite entangled qubits (e.g. in
+the GHZ or W state) may be added later.
+
+For each quantum path, the following attributes can be specified:
+
+ * The two routers (A and Z) at the end-points of the quantum paths. All paths are
+   bi-directional, in the sense that Bell pairs are always produced in pairs, where one qubit
+   appears at router A and the other qubit appears at router Z. Thus, so there is no concept of
+   source (ingress) router or destination (egress) router for a quantum path.
+
+ * The requested bandwidth for the quantum path expressed in end-to-end Bell Pairs Per Second
+   (BPPS).
+ 
+ * The requested fidelity for the produced Bell pairs.
+
+ * [TODO] More.
+
+For each constraint, the following attributes can be specified:
+
+ * [TODO].
+
+
 
 ## Information in the _technology_ file
 
