@@ -53,6 +53,24 @@ For each link, the following attributes can be specified:
  * [TODO] Additional attributes, such as the point-to-point capacity of the link in Bell Pairs
    per second, or attributes that allow the calculation of the capacity (e.g. length in km, etc.)
 
+The _network_ file can be manually constructed or it can be dynamically constructed using, for
+example, the following automatic discovery mechanisms:
+
+ * Existing link-state routing protocols such as Open Shortest Path First (OSPF) or Intermediate
+   System to Intermediate System (ISIS) can be used to dynamically discover the topology of the
+   network, i.e. which quantum routers are present and which links interconnect them.
+
+ * If the classical topology is different from the quantum topology (i.e. if some links are used
+   for classical messages only and other links are used for qubits only) then existing
+   Multi-Topology (MT) extensions to OSPF and ISIS could be used or generalized to discover the
+   classical and quantum topology separately.
+
+ * The Traffic Engineering (TE) extensions to OSPF and ISIS can be generalized to discover the
+   available resources and attributes of routers and links that are unique to quantum networking,
+   such as for example the number of memory qubits on a router. A step in this direction has already
+   been taken in the IETF Internet Draft "Advertising Entanglement
+   Capabilities in Quantum Networks" ([draft-kaws-qirg-advent](https://datatracker.ietf.org/doc/draft-kaws-qirg-advent/))
+
 ## Information in the _demand_ file
 
 [TODO]
