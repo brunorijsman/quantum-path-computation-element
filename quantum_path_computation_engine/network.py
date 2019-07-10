@@ -41,7 +41,7 @@ class Network:
                 self.routers.append(router)
         if 'links' in model:
             for link_model in model['links']:
-                link = Router(model=link_model)
+                link = Link(model=link_model)
                 self.links.append(link)
 
 class Router:

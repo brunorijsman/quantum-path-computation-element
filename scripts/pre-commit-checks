@@ -77,7 +77,7 @@ extract_actual_coverage () {
 }
 
 check_code_coverage_is_sufficient () {
-    minumum_coverage="40"    # TODO: Increase minimum code coverage to 95%
+    minumum_coverage="95"
     output=$(coverage report --fail-under=${minumum_coverage})
     exit_code=$?
     actual_coverage=$(coverage report | tail -1 | tr -s " " | cut -d " " -f 4)
