@@ -86,7 +86,7 @@ The service provided by a quantum path from point A to point Z is to generate pa
 entangled Bell pairs at points A and Z. These Bell pairs are consumed by quantum application
 end-points running at points A and Z. The Bell pairs can be consumed directly, e.g. for
 Quantum Key Distribution (QKD). Or the Bell pairs can be consumed to teleport qubits with an
-arbitrary state for more general distribute quantum applications.
+arbitrary state for more general distributed quantum applications.
 
 The application is able to request that these end-to-end entangled Bell pairs are
 generated at a specific rate, e.g. 10 Bell Pairs Per Second (BPPS). The job of the quantum path
