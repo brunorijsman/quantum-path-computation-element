@@ -5,12 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: network-valid",
+            "name": "QCPE run",
             "type": "python",
             "request": "launch",
             "program": "quantum_path_computation_engine",
             "console": "integratedTerminal",
-            "args": ["test/network-valid.yaml"]             
+            "args": ["tests/network-valid.yaml"]             
+        },
+        {
+            "name": "QCPE test",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/env/bin/pytest",
+            "console": "integratedTerminal",
+            "args": ["-vvv", "-s", "tests/test_main.py"]             
         }
     ]
 }
