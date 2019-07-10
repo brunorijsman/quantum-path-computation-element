@@ -10,7 +10,7 @@ ROUTER_SCHEMA = {
 LINK_SCHEMA = {
     'from': {'required': True, 'type': 'string'},
     'to': {'required': True, 'type': 'string'},
-    # TODO: 'bandwidth':  {'type': 'integer'},       # Point-to-point capacity in Bell pairs per sec
+    'length':  {'type': 'integer', 'min': 1},  # Physical length of the link in meters
 }
 
 NETWORK_SCHEMA = {
