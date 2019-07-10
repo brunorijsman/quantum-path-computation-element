@@ -12,15 +12,15 @@ The inputs are:
  * A _network_ file that describes the topology of the quantum network as well as the resources
    that are available in the quantum network.
 
- * [TODO] A _demand_ file that describes the traffic demand and other constrains for the end-to-end
+ * A _demand_ file that describes the traffic demand and other constrains for the end-to-end
    quantum communication paths that the quantum applications wish to establish.
 
- * [TODO] A _technology_ file that describes the attributes of the specific technology that is used
+ * A _technology_ file that describes the attributes of the specific technology that is used
    to implement the quantum network (e.g. nitrogen-vacancy centers versus ion traps)
 
  The output is:
 
- * [TODO] A _route_ file that describes the computed route for each path, or an indication that no
+ * A _route_ file that describes the computed route for each path, or an indication that no
    feasible route for the path could be determined.
 
 The output of the Quantum Path Computation Element (i.e. the computed routes) can be fed into a
