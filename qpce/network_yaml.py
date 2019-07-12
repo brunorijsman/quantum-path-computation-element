@@ -34,8 +34,7 @@ NETWORK_SCHEMA = {
     },
 }
 
-class ReadNetworkModelError(Exception):
-    # TODO: Rename this
+class ReadNetworkYamlError(Exception):
     """Exception is thrown when there is a problem reading the network model."""
 
 class NetworkValidator(cerberus.Validator):
@@ -49,13 +48,13 @@ def read_network_from_yaml_file(filename):
     Returns:
         A Network object.
     Raises:
-        ReadNetworkModelError: There was a problem reading the network model.
+        ReadNetworkYamlError: There was a problem reading the network model.
     """
     try:
         file = open(filename, 'r')
     except (OSError, IOError) as err:
         message = f"Could not open network file {filename} ({err})"
-        raise ReadNetworkModelError(message)
+        raise ReadNetworkYamlError(message)
     with file:
         return read_network_from_yaml_stream(file)
 
@@ -68,17 +67,17 @@ def read_network_from_yaml_stream(stream):
     Returns:
         A Network object.
     Raises:
-        ReadNetworkModelError: There was a problem reading the network model.
+        ReadNetworkYamlError: There was a problem reading the network model.
     """
     try:
         network_model = yaml.safe_load(stream)
     except yaml.YAMLError as err:
         message = f"Could not parse network YAML document ({err})"
-        raise ReadNetworkModelError(message)
+        raise ReadNetworkYamlError(message)
     validator = NetworkValidator(NETWORK_SCHEMA)
     if not validator.validate(network_model, NETWORK_SCHEMA):
         message = f"Could not validate network YAMLdocument"
-        raise ReadNetworkModelError(message)
+        raise ReadNetworkYamlError(message)
         # TODO: Better error message, reporting validator.errors using pretty printer
     network_model = validator.normalized(network_model)
     return read_network_from_parsed_yaml(network_model)
@@ -91,7 +90,7 @@ def read_network_from_parsed_yaml(network_model):
     Returns:
         A Network object.
     Raises:
-        ReadNetworkModelError: There was a problem reading the network model.
+        ReadNetworkYamlError: There was a problem reading the network model.
     """
     network = Network()
     if 'routers' in network_model:
@@ -126,12 +125,12 @@ def read_link_from_parsed_yaml(link_model, network):
     if router_1_name in network.routers:
         router_1 = network.routers[router_1_name]
     else:
-        raise ReadNetworkModelError(f"Link has non-existent router-1 {router_1_name}")
+        raise ReadNetworkYamlError(f"Link has non-existent router-1 {router_1_name}")
     router_2_name = link_model['router-2']
     if router_2_name in network.routers:
         router_2 = network.routers[router_2_name]
     else:
-        raise ReadNetworkModelError(f"Link has non-existent router-2 {router_2_name}")
+        raise ReadNetworkYamlError(f"Link has non-existent router-2 {router_2_name}")
     return Link(router_1=router_1,
                 router_2=router_2,
                 length=link_model['length'])

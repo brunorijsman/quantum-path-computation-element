@@ -11,7 +11,7 @@ def test_valid_network_file():
 
 def test_non_existent_network_file():
     """Test reading a network YAML file that does not exist."""
-    with pytest.raises(network_yaml.ReadNetworkModelError):
+    with pytest.raises(network_yaml.ReadNetworkYamlError):
         _network = network_yaml.read_network_from_yaml_file("tests/non-existent-file.yaml")
 
 def test_valid_network_string():
@@ -31,7 +31,7 @@ def test_parse_bad_yaml():
                            "  - name: alice\n"
                            "  - name: bob\n"
                            "this is not valid YAML\n")
-    with pytest.raises(network_yaml.ReadNetworkModelError):
+    with pytest.raises(network_yaml.ReadNetworkYamlError):
         _network = network_yaml.read_network_from_yaml_stream(document)
 
 def test_validate_bad_attribute():
@@ -43,7 +43,7 @@ def test_validate_bad_attribute():
                            "  - router-1: alice\n"
                            "    router-2: bob\n"
                            "    nonsense: 300\n")
-    with pytest.raises(network_yaml.ReadNetworkModelError):
+    with pytest.raises(network_yaml.ReadNetworkYamlError):
         _network = network_yaml.read_network_from_yaml_stream(document)
 
 def test_validate_link_bad_router_1():
@@ -55,7 +55,7 @@ def test_validate_link_bad_router_1():
                            "  - router-1: ava\n"
                            "    router-2: bob\n"
                            "    length: 300\n")
-    with pytest.raises(network_yaml.ReadNetworkModelError):
+    with pytest.raises(network_yaml.ReadNetworkYamlError):
         _network = network_yaml.read_network_from_yaml_stream(document)
 
 def test_validate_link_bad_router_2():
@@ -67,7 +67,7 @@ def test_validate_link_bad_router_2():
                            "  - router-1: alice\n"
                            "    router-2: bart\n"
                            "    length: 300\n")
-    with pytest.raises(network_yaml.ReadNetworkModelError):
+    with pytest.raises(network_yaml.ReadNetworkYamlError):
         _network = network_yaml.read_network_from_yaml_stream(document)
 
 def test_validate_link_bad_lenght():
@@ -79,5 +79,5 @@ def test_validate_link_bad_lenght():
                            "  - router-1: alice\n"
                            "    router-2: bob\n"
                            "    length: -100\n")
-    with pytest.raises(network_yaml.ReadNetworkModelError):
+    with pytest.raises(network_yaml.ReadNetworkYamlError):
         _network = network_yaml.read_network_from_yaml_stream(document)
