@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/brunorijsman/quantum-path-computation-element.svg?branch=master)](https://travis-ci.org/brunorijsman/quantum-path-computation-element)   [![Code Coverage](https://codecov.io/gh/brunorijsman/quantum-path-computation-element/branch/master/graph/badge.svg)](https://codecov.io/gh/brunorijsman/quantum-path-computation-element)
+[![Build Status](https://travis-ci.org/brunorijsman/quantum-path-computation-element.svg?branch=master)](https://travis-ci.org/brunorijsman/quantum-path-computation-element)   [![Code Coverage](https://codecov.io/gh/brunorijsman/quantum-path-computation-element/branch/master/graph/badge.svg)](https://codecov.io/gh/brunorijsman/quantum-path-computation-element) [![Documentation Status](https://readthedocs.org/projects/quantum-path-computation-element/badge/?version=latest)](https://quantum-path-computation-element.readthedocs.io/en/latest/?badge=latest)
+
 
 # Quantum Path Computation Element
 
