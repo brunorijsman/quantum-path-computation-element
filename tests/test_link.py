@@ -29,3 +29,12 @@ def test_create_link_bad_lenght():
         _link = Link(alice, bob, -100)
     with pytest.raises(AssertionError):
         _link = Link(alice, bob, 0)
+
+def test_create_link_routers_in_different_networks():
+    """Attempt to create a link whose routers are in different networks."""
+    network_1 = Network()
+    network_2 = Network()
+    alice = Router(network_1, "alice")
+    bob = Router(network_2, "bob")
+    with pytest.raises(AssertionError):
+        _link = Link(alice, bob, 100)

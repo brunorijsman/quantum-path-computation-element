@@ -14,6 +14,7 @@ class Router:
         """Initialize a quantum router.
 
         Args:
+            network (Network): The network in which the router is created.
             name (str): The name of quantum router; uniquely identifies the router within the
             quantum network.
         Raises:
