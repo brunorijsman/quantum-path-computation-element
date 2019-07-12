@@ -8,7 +8,7 @@
             "name": "QCPE run",
             "type": "python",
             "request": "launch",
-            "program": "quantum_path_computation_engine",
+            "program": "qpce",
             "console": "integratedTerminal",
             "args": ["tests/network-valid.yaml"]             
         },

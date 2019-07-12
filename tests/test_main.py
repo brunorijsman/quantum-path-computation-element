@@ -2,8 +2,8 @@
 
 import pytest
 
-from quantum_path_computation_engine.__main__ import parse_command_line_arguments
-from quantum_path_computation_engine.__main__ import main
+from qpce.__main__ import parse_command_line_arguments
+from qpce.__main__ import main
 
 def test_no_arguments(capsys):
     """Test absence of command line arguments."""

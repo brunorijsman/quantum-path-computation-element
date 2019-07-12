@@ -1,7 +1,7 @@
-quantum_path_computation_engine
-===============================
+qpce
+====
 
 .. toctree::
    :maxdepth: 4
 
-   quantum_path_computation_engine
+   qpce

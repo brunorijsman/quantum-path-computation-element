@@ -26,8 +26,7 @@ rm -f .coverage.*
 rm -rf htmlcov
 
 # Run one single test and measure coverage
-echo "pytest --cov=tests --cov=quantum_path_computation_engine --cov-report=html ${test_script}"
-pytest --cov=tests --cov=quantum_path_computation_engine --cov-report=html ${test_script}
+pytest --cov=tests --cov=qpce --cov-report=html ${test_script}
 
 # Open the coverage report in the browser (this assumes Mac)
 open htmlcov/index.html
