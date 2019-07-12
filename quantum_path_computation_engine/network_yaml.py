@@ -3,15 +3,17 @@
 import yaml
 import cerberus
 
+from link import Link
 from network import Network
+from router import Router
 
 ROUTER_SCHEMA = {
     'name': {'type': 'string', 'required': True},
 }
 
 LINK_SCHEMA = {
-    'from': {'type': 'string', 'required': True},
-    'to': {'type': 'string', 'required': True},
+    'router-1': {'type': 'string', 'required': True},
+    'router-2': {'type': 'string', 'required': True},
     'length':  {'type': 'integer', 'required': True, 'min': 1},
 }
 
@@ -83,10 +85,20 @@ def read_network_from_yaml_stream(stream):
     network = Network()
     if 'routers' in network_model:
         for router_model in network_model['routers']:
-            _router = network.create_router(name=router_model['name'])
+            _router = Router(network=network, name=router_model['name'])
     if 'links' in network_model:
         for link_model in network_model['links']:
-            _link = network.create_link(from_router_name=link_model['from'],
-                                        to_router_name=link_model['to'],
-                                        length=link_model['length'])
+            router_1_name = link_model['router-1']
+            if router_1_name in network.routers:
+                router_1 = network.routers[router_1_name]
+            else:
+                raise ReadNetworkModelError(f"Link has non-existent router-1 {router_1_name}")
+            router_2_name = link_model['router-2']
+            if router_2_name in network.routers:
+                router_2 = network.routers[router_2_name]
+            else:
+                raise ReadNetworkModelError(f"Link has non-existent router-2 {router_2_name}")
+            _link = Link(router_1=router_1,
+                         router_2=router_2,
+                         length=link_model['length'])
     return network

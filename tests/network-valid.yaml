@@ -17,24 +17,24 @@ routers:
   - name: david
   - name: erin
 links:
-  - from: alice
-    to: bob
+  - router-1: alice
+    router-2: bob
     length: 100
-  - from: alice
-    to: carol
+  - router-1: alice
+    router-2: carol
     length: 100
-  - from: alice
-    to: david
+  - router-1: alice
+    router-2: david
     length: 100
-  - from: bob
-    to: carol
+  - router-1: bob
+    router-2: carol
     length: 100
-  - from: carol
-    to: david
+  - router-1: carol
+    router-2: david
     length: 100
-  - from: carol
-    to: erin
+  - router-1: carol
+    router-2: erin
     length: 100
-  - from: david
-    to: erin
+  - router-1: david
+    router-2: erin
     length: 100
