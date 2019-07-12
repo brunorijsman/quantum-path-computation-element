@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Parse command-line arguments
+if [[ $# -ne 1 ]]; then
+    echo "Expect one command-line parameter: test case Python script"
+    exit 1
+fi
+test_script="$1"
+
+# Make sure test script exists
+if [ ! -f ${test_script} ]; then
+    echo "Test script ${test_script} does not exist"
+    exit 1
+fi
+
+# Must be running in virtual environment
+if [[ -z "${VIRTUAL_ENV}" ]]; then
+    echo "Virtual environment is not active"
+    exit 1    
+fi
+
+# Cleanup old coverage reports
+cd ${VIRTUAL_ENV}/..
+rm -f .coverage
+rm -f .coverage.*
+rm -rf htmlcov
+
+# Run one single test and measure coverage
+echo "pytest --cov=tests --cov=quantum_path_computation_engine --cov-report=html ${test_script}"
+pytest --cov=tests --cov=quantum_path_computation_engine --cov-report=html ${test_script}
+
+# Open the coverage report in the browser (this assumes Mac)
+open htmlcov/index.html

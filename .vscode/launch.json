@@ -18,7 +18,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/env/bin/pytest",
             "console": "integratedTerminal",
-            "args": ["-vvv", "-s", "tests/test_main.py"]             
+            "args": ["-vvv", "-s"]
         }
     ]
 }

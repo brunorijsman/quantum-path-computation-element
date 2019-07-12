@@ -19,15 +19,22 @@ routers:
 links:
   - from: alice
     to: bob
+    length: 100
   - from: alice
     to: carol
+    length: 100
   - from: alice
     to: david
+    length: 100
   - from: bob
     to: carol
+    length: 100
   - from: carol
     to: david
+    length: 100
   - from: carol
     to: erin
+    length: 100
   - from: david
     to: erin
+    length: 100

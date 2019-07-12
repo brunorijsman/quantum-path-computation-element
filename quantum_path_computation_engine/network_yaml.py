@@ -1,16 +1,18 @@
-"""Parsing of the network YAML file into a network_model (intermediate representation)."""
+"""Parsing of the network YAML file."""
 
 import yaml
 import cerberus
 
+from network import Network
+
 ROUTER_SCHEMA = {
-    'name': {'required': True, 'type': 'string'},
+    'name': {'type': 'string', 'required': True},
 }
 
 LINK_SCHEMA = {
-    'from': {'required': True, 'type': 'string'},
-    'to': {'required': True, 'type': 'string'},
-    'length':  {'type': 'integer', 'min': 1},  # Physical length of the link in meters
+    'from': {'type': 'string', 'required': True},
+    'to': {'type': 'string', 'required': True},
+    'length':  {'type': 'integer', 'required': True, 'min': 1},
 }
 
 NETWORK_SCHEMA = {
@@ -36,14 +38,13 @@ class ReadNetworkModelError(Exception):
 class NetworkValidator(cerberus.Validator):
     """The NetworkValidator class is used to validate the correctness of a network YAML file."""
 
-def read_network_model_from_file(filename):
-    """Read and parse a network YAML document from a file and return the corresponding network
-    model.
+def read_network_from_yaml_file(filename):
+    """Read and parse a network YAML document from a file.
 
     Args:
         Filename: Filename of the file to read the network YAML document from.
     Returns:
-        The network model (intermediate representation).
+        A Network object.
     Raises:
         ReadNetworkModelError: There was a problem reading the network model.
     """
@@ -53,16 +54,16 @@ def read_network_model_from_file(filename):
         message = f"Could not open network file {filename} ({err})"
         raise ReadNetworkModelError(message)
     with file:
-        return read_network_model_from_stream(file)
+        return read_network_from_yaml_stream(file)
 
-def read_network_model_from_stream(stream):
+def read_network_from_yaml_stream(stream):
     """Read and parse a network YAML document from a stream and return the corresponding network
     model.
 
     Args:
         stream: Stream to read the network YAML document from.
     Returns:
-        The network model (intermediate representation).
+        A Network object.
     Raises:
         ReadNetworkModelError: There was a problem reading the network model.
     """
@@ -79,4 +80,13 @@ def read_network_model_from_stream(stream):
         # pretty_printer = pprint.PrettyPrinter()
         # pretty_printer.pprint(validator.errors)
     network_model = validator.normalized(network_model)
-    return network_model
+    network = Network()
+    if 'routers' in network_model:
+        for router_model in network_model['routers']:
+            _router = network.create_router(name=router_model['name'])
+    if 'links' in network_model:
+        for link_model in network_model['links']:
+            _link = network.create_link(from_router_name=link_model['from'],
+                                        to_router_name=link_model['to'],
+                                        length=link_model['length'])
+    return network
