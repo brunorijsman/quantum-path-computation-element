@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.org/brunorijsman/quantum-path-computation-engine.svg?branch=master)](https://travis-ci.org/brunorijsman/quantum-path-computation-engine)   [![Code Coverage](https://codecov.io/gh/brunorijsman/quantum-path-computation-engine/branch/master/graph/badge.svg)](https://codecov.io/gh/brunorijsman/quantum-path-computation-engine)
+[![Build Status](https://travis-ci.org/brunorijsman/quantum-path-computation-engine.svg?branch=master)](https://travis-ci.org/brunorijsman/quantum-path-computation-element)   [![Code Coverage](https://codecov.io/gh/brunorijsman/quantum-path-computation-element/branch/master/graph/badge.svg)](https://codecov.io/gh/brunorijsman/quantum-path-computation-element)
 
-# Quantum Path Computation Engine
+# Quantum Path Computation Element
 
 ## Summary of the functionality
 
-The Quantum Path Computation Engine (QPCE) computes the route for quantum paths on a quantum
+The Quantum Path Computation Element (QPCE) computes the route for quantum paths on a quantum
 network. 
 
 The inputs are:
@@ -90,11 +90,11 @@ arbitrary state for more general distributed quantum applications.
 
 The application is able to request that these end-to-end entangled Bell pairs are
 generated at a specific rate, e.g. 10 Bell Pairs Per Second (BPPS). The job of the quantum path
-computation engine is to compute the route (e.g. A-B-C-D-Z) in such a manner that all paths are
+computation element is to compute the route (e.g. A-B-C-D-Z) in such a manner that all paths are
 able to provide the requested "bandwidth" (in end-to-end BPPS) and also satisfy the other
 constraints.
 
-The quantum path computation engine endeavors to compute the optimal set of path routes in the
+The quantum path computation element endeavors to compute the optimal set of path routes in the
 sense that the total amount of resources consumed on the network is minimized.
 
 We currently only support point-to-point quantum paths that generate bi-partite entangled bell
