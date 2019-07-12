@@ -1,5 +1,6 @@
 """Unit tests for module network."""
 
+import pytest
 import network
 
 def test_create_router():
@@ -22,3 +23,27 @@ def test_create_link():
     assert net.routers["bob"] == bob
     assert alice.links[0] == link
     assert bob.links[0] == link
+
+def test_create_link_bad_from_router():
+    """Attempt to create a link whose from_router does not exist."""
+    net = network.Network()
+    _bob = net.create_router("bob")
+    with pytest.raises(AssertionError):
+        _link = net.create_link("ava", "bob", 100)
+
+def test_create_link_bad_to_router():
+    """Attempt to create a link whose to_router does not exist."""
+    net = network.Network()
+    _alice = net.create_router("alice")
+    with pytest.raises(AssertionError):
+        _link = net.create_link("alice", "bart", 100)
+
+def test_create_link_bad_lenght():
+    """Attempt to create a link whose length is not greater than zero."""
+    net = network.Network()
+    _alice = net.create_router("alice")
+    _bob = net.create_router("bob")
+    with pytest.raises(AssertionError):
+        _link = net.create_link("alice", "bob", -100)
+    with pytest.raises(AssertionError):
+        _link = net.create_link("alice", "bob", 0)
