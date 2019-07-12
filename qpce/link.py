@@ -17,7 +17,7 @@ class Link:
         Args:
             router_1 (Router): The first router object that the link is connected to.
             router_2 (Router): The second router object that the link is connected to.
-            length (int): Length of the link in meters. Must be >=0.
+            length (int): Length of the link in meters. Must be > 0.
 
         Links are bi-directional, so router_1 and router_2 can be reversed without consequence.
 
