@@ -3,9 +3,13 @@
 class Link:
     # TODO: Remove this when we have more methods
     # pylint:disable=too-few-public-methods
-    """A quantum link.
+    """A link.
 
-    A quantum link object represents a physical quantum link between a pair of quantum routers."""
+    A link object represents a physical link between a pair of quantum routers.
+
+    The current implementation assumes that every link is both a quantum link (can exchange qubits)
+    as well as a classical link (can exchange classical messages). In other words, at this point
+    we assume that the quantum topology and the classical topology are the same."""
 
     def __init__(self, router_1, router_2, length):
         """Initialize a link.
