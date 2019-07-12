@@ -9,4 +9,8 @@ def test_create_path():
     network = Network()
     alice = Router(network, "alice")
     bob = Router(network, "bob")
-    _path = Path(alice, bob, "alice-to-bob")
+    _path = Path(end_point_1=alice,
+                 end_point_2=bob,
+                 name="alice-to-bob",
+                 bandwidth=10,
+                 fidelity=0.95)

@@ -20,8 +20,7 @@ class Network:
             router(Router): The quantum router to be added.
         Returns:
             None
-        Raises:
-            AssertionError if there is already a router with the same name in the network."""
+        """
         assert router.name not in self.routers, \
                f"Network already contains a router with name {router.name}"
         self.routers[router.name] = router

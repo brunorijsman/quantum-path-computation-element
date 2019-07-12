@@ -9,20 +9,24 @@ class Path:
     teleported. The path produces end-to-end Bell pairs at the rate and fidelity requested by the
     application."""
 
-    def __init__(self, end_point_1, end_point_2, name):
+    def __init__(self, end_point_1, end_point_2, name, bandwidth, fidelity):
         """Initialize a quantum path.
 
         Args:
             end_point_1 (Router): The first end-point router of the path.
             end_point_2 (Router): The second end-point router of the path.
             name (str): Name of the path.
-        Raises:
-            AssertionError end-points are not in the same network
+            bandwidth (int): Requested bandwidth in end-to-end Bell pairs per second.
+            fidelity (float): Requested fidelity of the generated end-to-end Bell pairs.
 
         Currently, the end points must be routers. In the future we may add support for host
-        end-points."""
-        assert end_point_1.network == end_point_2.network, \
-               "End-points of the path are not in the same network"
+        end-points.
+        """
+        assert end_point_1.network == end_point_2.network, "End-points are not in the same network"
+        assert bandwidth > 0, "Requested end-to-end bandwidth must be > 0"
+        assert fidelity > 0.0, "Requested end-to-end fidelity must be > 0.0"
         self.end_point_1 = end_point_1
         self.end_point_2 = end_point_2
         self.name = name
+        self.bandwidth = bandwidth
+        self.fidelity = fidelity
