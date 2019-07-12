@@ -5,6 +5,8 @@ RED="\033[31m"
 GREEN="\033[32m"
 INVERT="\033[7m"
 
+MODULE="quantum_path_computation_engine"
+
 progress_ok () {
     message="$1"
     echo -e "${GREEN}[OK]${RESET} ${message}"
@@ -53,8 +55,8 @@ check_directory_has_perfect_pylint_score () {
     progress_ok "${step}"
 }
 
-check_directory_quantum_path_computation_engine_has_perfect_pylint_score () {
-    check_directory_has_perfect_pylint_score quantum_path_computation_engine
+check_directory_module_has_perfect_pylint_score () {
+    check_directory_has_perfect_pylint_score ${MODULE}
 }
 
 check_directory_tests_has_perfect_pylint_score () {
@@ -63,7 +65,7 @@ check_directory_tests_has_perfect_pylint_score () {
 
 check_all_tests_pass () {
     step="Check all tests pass"
-    if ! output=$(pytest --cov=tests --cov=quantum_path_computation_engine --cov-report=html); then
+    if ! output=$(pytest --cov=tests --cov=${MODULE} --cov-report=html); then
         remedy="Fix failing tests (all tests must pass)"
         fail "${step}" "${remedy}" "${output}"
     fi
@@ -89,12 +91,26 @@ check_code_coverage_is_sufficient () {
     progress_ok "${step}"
 }
 
+check_generate_docs () {
+    step="Generate documentation"
+    cd ${VIRTUAL_ENV}/../docs
+    output=$(make html 2>&1)
+    exit_code=$?    
+    if [[ ${exit_code} != 0 ]]; then
+        remedy="Fix documentation generation"
+        fail "${step}" "${remedy}" "${output}"
+    fi
+    progress_ok "${step}"
+
+}
+
 check_virtual_environment_is_active
 cleanup_temporary_files
-check_directory_quantum_path_computation_engine_has_perfect_pylint_score
+check_directory_module_has_perfect_pylint_score
 check_directory_tests_has_perfect_pylint_score
 check_all_tests_pass
 check_code_coverage_is_sufficient
+check_generate_docs
 
 # TODO: Generate documentation
 
