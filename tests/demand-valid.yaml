@@ -1,0 +1,23 @@
+# Test demand file which is valid and exercises all supported attributes
+
+paths:
+  - name: alice-to-bob
+    end-point-1: alice
+    end-point-2: bob
+    bandwidth: 100
+    fidelity: 0.95
+  - name: bob-to-alice
+    end-point-1: bob
+    end-point-2: alice
+    bandwidth: 90
+    fidelity: 0.80
+  - name: alice-to-erin-1
+    end-point-1: alice
+    end-point-2: erin
+    bandwidth: 40
+    fidelity: 0.90
+  - name: alice-to-erin-2
+    end-point-1: alice
+    end-point-2: erin
+    bandwidth: 40
+    fidelity: 0.90

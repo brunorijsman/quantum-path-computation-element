@@ -35,7 +35,7 @@ NETWORK_SCHEMA = {
 }
 
 class ReadNetworkYamlError(Exception):
-    """Exception is thrown when there is a problem reading the network model."""
+    """Exception is thrown when there is a problem reading the network YAML file."""
 
 class NetworkValidator(cerberus.Validator):
     """The NetworkValidator class is used to validate the correctness of a network YAML file."""

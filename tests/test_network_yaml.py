@@ -7,7 +7,7 @@ import network_yaml
 
 def test_valid_network_file():
     """Test reading a valid network YAML file."""
-    _networl = network_yaml.read_network_from_yaml_file("tests/network-valid.yaml")
+    _network = network_yaml.read_network_from_yaml_file("tests/network-valid.yaml")
 
 def test_non_existent_network_file():
     """Test reading a network YAML file that does not exist."""
